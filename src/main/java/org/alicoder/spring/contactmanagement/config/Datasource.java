@@ -12,6 +12,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.sql.DataSource;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -41,7 +42,7 @@ public class Datasource {
     }
 
     @Bean
-    DriverManagerDataSource dataSource() {
+    DataSource dataSource() {
         DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setUrl(environment.getProperty(PROPERTY_URL));
         ds.setUsername(environment.getProperty(PROPERTY_USERNAME));
