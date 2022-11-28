@@ -1,12 +1,16 @@
 <%--
   Created by IntelliJ IDEA.
   User: chien
-  Date: 11/26/2022
-  Time: 9:39 PM
+  Date: 11/28/2022
+  Time: 7:46 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
@@ -50,15 +54,59 @@
     <link href="assets/demo/demo.css" rel="stylesheet" />
     <!-- Google Tag Manager -->
     <script>
-        (function(w, d, s, l, i) {
+    function deleteUser(url) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ok!'
+        }).then((result) => {
+            if (result.value === true) {
+                post(url);
+                Swal.fire(
+                    'Deleted!',
+                    'Contact has been deleted.',
+                    'success'
+                )
+            }
+        })
+    }
+
+    function post(path, params, method) {
+        debugger
+        method = method || "post";
+
+        var form = document.createElement("form");
+        form.setAttribute("method", method);
+        form.setAttribute("action", path);
+
+        for ( var key in params) {
+            if (params.hasOwnProperty(key)) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.appendChild(hiddenField);
+            }
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+    (function(w, d, s, l, i) {
             w[l] = w[l] || [];
             w[l].push({
                 'gtm.start': new Date().getTime(),
                 event: 'gtm.js'
             });
-            const f = d.getElementsByTagName(s)[0],
+            var f = d.getElementsByTagName(s)[0],
                 j = d.createElement(s),
-                dl = l !== 'dataLayer' ? '&l=' + l : '';
+                dl = l != 'dataLayer' ? '&l=' + l : '';
             j.async = true;
             j.src =
                 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
@@ -67,7 +115,8 @@
     </script>
     <!-- End Google Tag Manager -->
 </head>
-<body>
+
+<body class="">
 <!-- Extra details for Live View on GitHub Pages -->
 <!-- Google Tag Manager (noscript) -->
 <noscript>
@@ -126,8 +175,8 @@
                 </div>
             </div>
             <ul class="nav">
-                <li class="nav-item active ">
-                    <a class="nav-link" href="../examples/dashboard.html">
+                <li class="nav-item ">
+                    <a class="nav-link" href="../../examples/dashboard.html">
                         <i class="material-icons">dashboard</i>
                         <p> Dashboard </p>
                     </a>
@@ -142,49 +191,49 @@
                     <div class="collapse" id="pagesExamples">
                         <ul class="nav">
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/pages/pricing.html">
+                                <a class="nav-link" href="../../examples/pages/pricing.html">
                                     <span class="sidebar-mini"> P </span>
                                     <span class="sidebar-normal"> Pricing </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/pages/rtl.html">
+                                <a class="nav-link" href="../../examples/pages/rtl.html">
                                     <span class="sidebar-mini"> RS </span>
                                     <span class="sidebar-normal"> RTL Support </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/pages/timeline.html">
+                                <a class="nav-link" href="../../examples/pages/timeline.html">
                                     <span class="sidebar-mini"> T </span>
                                     <span class="sidebar-normal"> Timeline </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/pages/login.html">
+                                <a class="nav-link" href="../../examples/pages/login.html">
                                     <span class="sidebar-mini"> LP </span>
                                     <span class="sidebar-normal"> Login Page </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/pages/register.html">
+                                <a class="nav-link" href="../../examples/pages/register.html">
                                     <span class="sidebar-mini"> RP </span>
                                     <span class="sidebar-normal"> Register Page </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/pages/lock.html">
+                                <a class="nav-link" href="../../examples/pages/lock.html">
                                     <span class="sidebar-mini"> LSP </span>
                                     <span class="sidebar-normal"> Lock Screen Page </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/pages/user.html">
+                                <a class="nav-link" href="../../examples/pages/user.html">
                                     <span class="sidebar-mini"> UP </span>
                                     <span class="sidebar-normal"> User Profile </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/pages/error.html">
+                                <a class="nav-link" href="../../examples/pages/error.html">
                                     <span class="sidebar-mini"> E </span>
                                     <span class="sidebar-normal"> Error Page </span>
                                 </a>
@@ -220,43 +269,43 @@
                                 </div>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/components/buttons.html">
+                                <a class="nav-link" href="../../examples/components/buttons.html">
                                     <span class="sidebar-mini"> B </span>
                                     <span class="sidebar-normal"> Buttons </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/components/grid.html">
+                                <a class="nav-link" href="../../examples/components/grid.html">
                                     <span class="sidebar-mini"> GS </span>
                                     <span class="sidebar-normal"> Grid System </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/components/panels.html">
+                                <a class="nav-link" href="../../examples/components/panels.html">
                                     <span class="sidebar-mini"> P </span>
                                     <span class="sidebar-normal"> Panels </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/components/sweet-alert.html">
+                                <a class="nav-link" href="../../examples/components/sweet-alert.html">
                                     <span class="sidebar-mini"> SA </span>
                                     <span class="sidebar-normal"> Sweet Alert </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/components/notifications.html">
+                                <a class="nav-link" href="../../examples/components/notifications.html">
                                     <span class="sidebar-mini"> N </span>
                                     <span class="sidebar-normal"> Notifications </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/components/icons.html">
+                                <a class="nav-link" href="../../examples/components/icons.html">
                                     <span class="sidebar-mini"> I </span>
                                     <span class="sidebar-normal"> Icons </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/components/typography.html">
+                                <a class="nav-link" href="../../examples/components/typography.html">
                                     <span class="sidebar-mini"> T </span>
                                     <span class="sidebar-normal"> Typography </span>
                                 </a>
@@ -274,25 +323,25 @@
                     <div class="collapse" id="formsExamples">
                         <ul class="nav">
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/forms/regular.html">
+                                <a class="nav-link" href="../../examples/forms/regular.html">
                                     <span class="sidebar-mini"> RF </span>
                                     <span class="sidebar-normal"> Regular Forms </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/forms/extended.html">
+                                <a class="nav-link" href="../../examples/forms/extended.html">
                                     <span class="sidebar-mini"> EF </span>
                                     <span class="sidebar-normal"> Extended Forms </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/forms/validation.html">
+                                <a class="nav-link" href="../../examples/forms/validation.html">
                                     <span class="sidebar-mini"> VF </span>
                                     <span class="sidebar-normal"> Validation Forms </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/forms/wizard.html">
+                                <a class="nav-link" href="../../examples/forms/wizard.html">
                                     <span class="sidebar-mini"> W </span>
                                     <span class="sidebar-normal"> Wizard </span>
                                 </a>
@@ -300,33 +349,33 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" data-toggle="collapse" href="#tablesExamples">
+                <li class="nav-item active ">
+                    <a class="nav-link" data-toggle="collapse" href="#tablesExamples" aria-expanded="true">
                         <i class="material-icons">grid_on</i>
                         <p> Tables
                             <b class="caret"></b>
                         </p>
                     </a>
-                    <div class="collapse" id="tablesExamples">
+                    <div class="collapse show" id="tablesExamples">
                         <ul class="nav">
                             <li class="nav-item ">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/users">
-                                    <span class="sidebar-mini"> UM </span>
-                                    <span class="sidebar-normal"> Contact Management </span>
+                                <a class="nav-link" href="../../examples/tables/regular.html">
+                                    <span class="sidebar-mini"> RT </span>
+                                    <span class="sidebar-normal"> Regular Tables </span>
                                 </a>
                             </li>
-                            <%--<li class="nav-item ">
-                                <a class="nav-link" href="../examples/tables/extended.html">
+                            <li class="nav-item ">
+                                <a class="nav-link" href="../../examples/tables/extended.html">
                                     <span class="sidebar-mini"> ET </span>
                                     <span class="sidebar-normal"> Extended Tables </span>
                                 </a>
                             </li>
-                            <li class="nav-item ">
-                                <a class="nav-link" href="../examples/tables/datatables.net.html">
+                            <li class="nav-item active ">
+                                <a class="nav-link" href="../../examples/tables/Grid Contact.html">
                                     <span class="sidebar-mini"> DT </span>
-                                    <span class="sidebar-normal"> DataTables.net </span>
+                                    <span class="sidebar-normal"> Grid Contact </span>
                                 </a>
-                            </li>--%>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -340,19 +389,19 @@
                     <div class="collapse" id="mapsExamples">
                         <ul class="nav">
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/maps/google.html">
+                                <a class="nav-link" href="../../examples/maps/google.html">
                                     <span class="sidebar-mini"> GM </span>
                                     <span class="sidebar-normal"> Google Maps </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/maps/fullscreen.html">
+                                <a class="nav-link" href="../../examples/maps/fullscreen.html">
                                     <span class="sidebar-mini"> FSM </span>
                                     <span class="sidebar-normal"> Full Screen Map </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="../examples/maps/vector.html">
+                                <a class="nav-link" href="../../examples/maps/vector.html">
                                     <span class="sidebar-mini"> VM </span>
                                     <span class="sidebar-normal"> Vector Map </span>
                                 </a>
@@ -361,19 +410,19 @@
                     </div>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="../examples/widgets.html">
+                    <a class="nav-link" href="../../examples/widgets.html">
                         <i class="material-icons">widgets</i>
                         <p> Widgets </p>
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="../examples/charts.html">
+                    <a class="nav-link" href="../../examples/charts.html">
                         <i class="material-icons">timeline</i>
                         <p> Charts </p>
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="../examples/calendar.html">
+                    <a class="nav-link" href="../../examples/calendar.html">
                         <i class="material-icons">date_range</i>
                         <p> Calendar </p>
                     </a>
@@ -392,7 +441,7 @@
                             <i class="material-icons design_bullet-list-67 visible-on-sidebar-mini">view_list</i>
                         </button>
                     </div>
-                    <a class="navbar-brand" href="#pablo">Dashboard</a>
+                    <a class="navbar-brand" href="#pablo">Grid Contact</a>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="sr-only">Toggle navigation</span>
@@ -455,389 +504,57 @@
         </nav>
         <!-- End Navbar -->
         <div class="content">
-            <div class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card ">
-                                <div class="card-header card-header-success card-header-icon">
-                                    <div class="card-icon">
-                                        <i class="material-icons"></i>
-                                    </div>
-                                    <h4 class="card-title">Global Sales by Top Locations</h4>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header card-header-primary card-header-icon">
+                                <div class="card-icon">
+                                    <i class="material-icons">assignment</i>
                                 </div>
-                                <div class="card-body ">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="table-responsive table-sales">
-                                                <table class="table">
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="flag">
-                                                                <img src="assets/img/flags/US.png"/> </div>
-                                                        </td>
-                                                        <td>USA</td>
-                                                        <td class="text-right">
-                                                            2.920
-                                                        </td>
-                                                        <td class="text-right">
-                                                            53.23%
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="flag">
-                                                                <img src="assets/img/flags/DE.png"/> </div>
-                                                        </td>
-                                                        <td>Germany</td>
-                                                        <td class="text-right">
-                                                            1.300
-                                                        </td>
-                                                        <td class="text-right">
-                                                            20.43%
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="flag">
-                                                                <img src="assets/img/flags/AU.png"/> </div>
-                                                        </td>
-                                                        <td>Australia</td>
-                                                        <td class="text-right">
-                                                            760
-                                                        </td>
-                                                        <td class="text-right">
-                                                            10.35%
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="flag">
-                                                                <img src="assets/img/flags/GB.png"/> </div>
-                                                        </td>
-                                                        <td>United Kingdom</td>
-                                                        <td class="text-right">
-                                                            690
-                                                        </td>
-                                                        <td class="text-right">
-                                                            7.87%
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="flag">
-                                                                <img src="assets/img/flags/RO.png"/> </div>
-                                                        </td>
-                                                        <td>Romania</td>
-                                                        <td class="text-right">
-                                                            600
-                                                        </td>
-                                                        <td class="text-right">
-                                                            5.94%
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="flag">
-                                                                <img src="assets/img/flags/BR.png"/> </div>
-                                                        </td>
-                                                        <td>Brasil</td>
-                                                        <td class="text-right">
-                                                            550
-                                                        </td>
-                                                        <td class="text-right">
-                                                            4.34%
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 ml-auto mr-auto">
-                                            <div id="worldMap" style="height: 300px;"></div>
-                                        </div>
-                                    </div>
+                                <h4 class="card-title">Grid Contact</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="toolbar">
+                                    <!--        Here you can write extra buttons/actions for the toolbar              -->
+                                </div>
+                                <div class="material-datatables">
+                                    <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Contact id</th>
+                                                <th>First name</th>
+                                                <th>Last name</th>
+                                                <th>Email</th>
+                                                <th class="disabled-sorting text-right">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <c:forEach items="${users}" var="item">
+                                        <tr>
+                                            <td>${item.userId}</td>
+                                            <td>${item.firstName}</td>
+                                            <td>${item.lastName}</td>
+                                            <td>${item.email}</td>
+                                            <td class="text-right">
+                                                <button class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">edit</i></button>
+                                                <a href="<c:url value='/users/${item.userId}/delete'/>" class="btn btn-link btn-danger btn-just-icon remove">
+                                                    <i class="material-icons">delete</i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
+                            <!-- end content-->
                         </div>
+                        <!--  end card  -->
                     </div>
-                    <!-- <button type="button" class="btn btn-round btn-default dropdown-toggle btn-link" data-toggle="dropdown">
-7 days
-</button> -->
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card card-chart">
-                                <div class="card-header card-header-rose" data-header-animation="true">
-                                    <div class="ct-chart" id="websiteViewsChart"></div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="card-actions">
-                                        <button type="button" class="btn btn-danger btn-link fix-broken-card">
-                                            <i class="material-icons">build</i> Fix Header!
-                                        </button>
-                                        <button type="button" class="btn btn-info btn-link" rel="tooltip" data-placement="bottom" title="Refresh">
-                                            <i class="material-icons">refresh</i>
-                                        </button>
-                                        <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Change Date">
-                                            <i class="material-icons">edit</i>
-                                        </button>
-                                    </div>
-                                    <h4 class="card-title">Website Views</h4>
-                                    <p class="card-category">Last Campaign Performance</p>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons">access_time</i> campaign sent 2 days ago
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card card-chart">
-                                <div class="card-header card-header-success" data-header-animation="true">
-                                    <div class="ct-chart" id="dailySalesChart"></div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="card-actions">
-                                        <button type="button" class="btn btn-danger btn-link fix-broken-card">
-                                            <i class="material-icons">build</i> Fix Header!
-                                        </button>
-                                        <button type="button" class="btn btn-info btn-link" rel="tooltip" data-placement="bottom" title="Refresh">
-                                            <i class="material-icons">refresh</i>
-                                        </button>
-                                        <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Change Date">
-                                            <i class="material-icons">edit</i>
-                                        </button>
-                                    </div>
-                                    <h4 class="card-title">Daily Sales</h4>
-                                    <p class="card-category">
-                                        <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons">access_time</i> updated 4 minutes ago
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card card-chart">
-                                <div class="card-header card-header-info" data-header-animation="true">
-                                    <div class="ct-chart" id="completedTasksChart"></div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="card-actions">
-                                        <button type="button" class="btn btn-danger btn-link fix-broken-card">
-                                            <i class="material-icons">build</i> Fix Header!
-                                        </button>
-                                        <button type="button" class="btn btn-info btn-link" rel="tooltip" data-placement="bottom" title="Refresh">
-                                            <i class="material-icons">refresh</i>
-                                        </button>
-                                        <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Change Date">
-                                            <i class="material-icons">edit</i>
-                                        </button>
-                                    </div>
-                                    <h4 class="card-title">Completed Tasks</h4>
-                                    <p class="card-category">Last Campaign Performance</p>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons">access_time</i> campaign sent 2 days ago
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="card card-stats">
-                                <div class="card-header card-header-warning card-header-icon">
-                                    <div class="card-icon">
-                                        <i class="material-icons">weekend</i>
-                                    </div>
-                                    <p class="card-category">Bookings</p>
-                                    <h3 class="card-title">184</h3>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons text-danger">warning</i>
-                                        <a href="#pablo">Get More Space...</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="card card-stats">
-                                <div class="card-header card-header-rose card-header-icon">
-                                    <div class="card-icon">
-                                        <i class="material-icons">equalizer</i>
-                                    </div>
-                                    <p class="card-category">Website Visits</p>
-                                    <h3 class="card-title">75.521</h3>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons">local_offer</i> Tracked from Google Analytics
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="card card-stats">
-                                <div class="card-header card-header-success card-header-icon">
-                                    <div class="card-icon">
-                                        <i class="material-icons">store</i>
-                                    </div>
-                                    <p class="card-category">Revenue</p>
-                                    <h3 class="card-title">$34,245</h3>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons">date_range</i> Last 24 Hours
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="card card-stats">
-                                <div class="card-header card-header-info card-header-icon">
-                                    <div class="card-icon">
-                                        <i class="fa fa-twitter"></i>
-                                    </div>
-                                    <p class="card-category">Followers</p>
-                                    <h3 class="card-title">+245</h3>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons">update</i> Just Updated
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <h3>Manage Listings</h3>
-                    <br>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card card-product">
-                                <div class="card-header card-header-image" data-header-animation="true">
-                                    <a href="#pablo">
-                                        <img class="img" src="assets/img/card-2.jpg">
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <div class="card-actions text-center">
-                                        <button type="button" class="btn btn-danger btn-link fix-broken-card">
-                                            <i class="material-icons">build</i> Fix Header!
-                                        </button>
-                                        <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="View">
-                                            <i class="material-icons">art_track</i>
-                                        </button>
-                                        <button type="button" class="btn btn-success btn-link" rel="tooltip" data-placement="bottom" title="Edit">
-                                            <i class="material-icons">edit</i>
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-link" rel="tooltip" data-placement="bottom" title="Remove">
-                                            <i class="material-icons">close</i>
-                                        </button>
-                                    </div>
-                                    <h4 class="card-title">
-                                        <a href="#pablo">Cozy 5 Stars Apartment</a>
-                                    </h4>
-                                    <div class="card-description">
-                                        The place is close to Barceloneta Beach and bus stop just 2 min by walk and near to "Naviglio" where you can enjoy the main night life in Barcelona.
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="price">
-                                        <h4>$899/night</h4>
-                                    </div>
-                                    <div class="stats">
-                                        <p class="card-category"><i class="material-icons">place</i> Barcelona, Spain</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card card-product">
-                                <div class="card-header card-header-image" data-header-animation="true">
-                                    <a href="#pablo">
-                                        <img class="img" src="assets/img/card-3.jpg">
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <div class="card-actions text-center">
-                                        <button type="button" class="btn btn-danger btn-link fix-broken-card">
-                                            <i class="material-icons">build</i> Fix Header!
-                                        </button>
-                                        <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="View">
-                                            <i class="material-icons">art_track</i>
-                                        </button>
-                                        <button type="button" class="btn btn-success btn-link" rel="tooltip" data-placement="bottom" title="Edit">
-                                            <i class="material-icons">edit</i>
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-link" rel="tooltip" data-placement="bottom" title="Remove">
-                                            <i class="material-icons">close</i>
-                                        </button>
-                                    </div>
-                                    <h4 class="card-title">
-                                        <a href="#pablo">Office Studio</a>
-                                    </h4>
-                                    <div class="card-description">
-                                        The place is close to Metro Station and bus stop just 2 min by walk and near to "Naviglio" where you can enjoy the night life in London, UK.
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="price">
-                                        <h4>$1.119/night</h4>
-                                    </div>
-                                    <div class="stats">
-                                        <p class="card-category"><i class="material-icons">place</i> London, UK</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card card-product">
-                                <div class="card-header card-header-image" data-header-animation="true">
-                                    <a href="#pablo">
-                                        <img class="img" src="assets/img/card-1.jpg">
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <div class="card-actions text-center">
-                                        <button type="button" class="btn btn-danger btn-link fix-broken-card">
-                                            <i class="material-icons">build</i> Fix Header!
-                                        </button>
-                                        <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="View">
-                                            <i class="material-icons">art_track</i>
-                                        </button>
-                                        <button type="button" class="btn btn-success btn-link" rel="tooltip" data-placement="bottom" title="Edit">
-                                            <i class="material-icons">edit</i>
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-link" rel="tooltip" data-placement="bottom" title="Remove">
-                                            <i class="material-icons">close</i>
-                                        </button>
-                                    </div>
-                                    <h4 class="card-title">
-                                        <a href="#pablo">Beautiful Castle</a>
-                                    </h4>
-                                    <div class="card-description">
-                                        The place is close to Metro Station and bus stop just 2 min by walk and near to "Naviglio" where you can enjoy the main night life in Milan.
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="price">
-                                        <h4>$459/night</h4>
-                                    </div>
-                                    <div class="stats">
-                                        <p class="card-category"><i class="material-icons">place</i> Milan, Italy</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- end col-md-12 -->
                 </div>
+                <!-- end row -->
             </div>
         </div>
         <footer class="footer">
@@ -996,7 +713,7 @@
 <script src="assets/js/plugins/bootstrap-selectpicker.js"></script>
 <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
 <script src="assets/js/plugins/bootstrap-datetimepicker.min.js"></script>
-<!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
+<!--  Grid Contact Plugin, full documentation here: https://Grid Contact/  -->
 <script src="assets/js/plugins/jquery.dataTables.min.js"></script>
 <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
 <script src="assets/js/plugins/bootstrap-tagsinput.js"></script>
@@ -1300,11 +1017,39 @@
 </noscript>
 <script>
     $(document).ready(function() {
-        // Javascript method's body can be found in assets/js/demos.js
-        md.initDashboardPageCharts();
+        $('#datatables').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+        });
 
-        md.initVectorMap();
+        var table = $('#datatable').DataTable();
 
+        // Edit record
+        table.on('click', '.edit', function() {
+            $tr = $(this).closest('tr');
+            const data = table.row($tr).data();
+            alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
+        });
+
+        // Delete a record
+        table.on('click', '.remove', function(e) {
+            $tr = $(this).closest('tr');
+            table.row($tr).remove().draw();
+            e.preventDefault();
+        });
+
+        //Like record
+        table.on('click', '.like', function() {
+            alert('You clicked on Like button');
+        });
     });
 </script>
 </body>

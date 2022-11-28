@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -19,5 +20,15 @@ public class UserServiceImpl implements UserService {
     public void save(UserPayload payload) throws NoSuchAlgorithmException {
         Users user = new Users(payload.getFirstName(), payload.getLastName(), payload.getEmail(), MD5Util.encrypt(payload.getPassword()));
         repository.save(user);
+    }
+
+    @Override
+    public List<Users> listUser() {
+        return repository.findAll();
+    }
+
+    @Override
+    public void delete(int id) {
+        repository.deleteById(id);
     }
 }
