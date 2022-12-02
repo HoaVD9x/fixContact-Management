@@ -514,6 +514,9 @@
                                 </div>
                                 <h4 class="card-title">Grid Contact</h4>
                             </div>
+                            <h3 class="d-flex justify-content-center">
+                                <a href="${pageContext.request.contextPath}/addNewUser" >Add New User </a>
+                            </h3>
                             <div class="card-body">
                                 <div class="toolbar">
                                     <!--        Here you can write extra buttons/actions for the toolbar              -->
@@ -537,7 +540,9 @@
                                             <td>${item.lastName}</td>
                                             <td>${item.email}</td>
                                             <td class="text-right">
-                                                <button class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">edit</i></button>
+                                                <a href="<c:url value='/users/${item.userId}/edit'/>" class="btn btn-link btn-danger btn-just-icon remove">
+                                                    <i class="material-icons">edit</i>
+                                                </a>
                                                 <a href="<c:url value='/users/${item.userId}/delete'/>" class="btn btn-link btn-danger btn-just-icon remove">
                                                     <i class="material-icons">delete</i>
                                                 </a>

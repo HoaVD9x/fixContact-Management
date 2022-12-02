@@ -21,6 +21,12 @@ public class UserServiceImpl implements UserService {
         Users user = new Users(payload.getFirstName(), payload.getLastName(), payload.getEmail(), MD5Util.encrypt(payload.getPassword()));
         repository.save(user);
     }
+    @Override
+    public void saveUsers(Users users) throws  NoSuchAlgorithmException {
+        users.setPassword(MD5Util.encrypt(users.getPassword()));
+        repository.save(users);
+
+    }
 
     @Override
     public List<Users> listUser() {
@@ -31,4 +37,11 @@ public class UserServiceImpl implements UserService {
     public void delete(int id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public Users select(int id) {
+        return repository.findByUserId(id);
+    }
+
+
 }

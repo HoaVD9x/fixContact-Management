@@ -13,4 +13,8 @@ public interface UserService {
     List<Users> listUser();
 
     void delete(int id);
+
+    Users select(int id);
+
+    void saveUsers(Users users) throws NoSuchAlgorithmException;
 }

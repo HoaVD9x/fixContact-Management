@@ -38,4 +38,11 @@ public class AuthenticationController {
             return new ModelAndView("redirect:dashboard", model);
         return new ModelAndView("redirect:login", model);
     }
+
+    @PostMapping(value = "/insert")
+    public ModelAndView insertUser(@ModelAttribute("user")  Users users, BindingResult bindingResult, ModelMap modelMap)
+            throws NoSuchAlgorithmException {
+        service.saveUsers(users);
+        return new ModelAndView("redirect:users",modelMap);
+    }
 }
